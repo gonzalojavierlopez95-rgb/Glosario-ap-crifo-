@@ -1,8 +1,0 @@
-{
-  "name": "glosario-ap-crifo1",
-  "compatibility_date": "2026-01-01",
-  "assets": {
-    "directory": "./",
-    "not_found_handling": "single-page-application"
-  }
-}
