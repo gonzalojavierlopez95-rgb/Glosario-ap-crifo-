@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glosario Apócrifo</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: #0b0908;
+    color: #e8d9b8;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+  .caja {
+    max-width: 380px;
+  }
+  .sello {
+    font-size: 56px;
+    line-height: 1;
+    margin-bottom: 18px;
+    filter: drop-shadow(0 0 10px rgba(200,40,40,0.35));
+  }
+  h1 {
+    font-size: 20px;
+    margin: 0 0 12px;
+    color: #f2c94c;
+    letter-spacing: 0.5px;
+  }
+  p {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #cbb98f;
+    margin: 0 0 22px;
+  }
+  button {
+    background: #5a1414;
+    color: #f2e6c9;
+    border: 1px solid #8a2a2a;
+    border-radius: 8px;
+    padding: 12px 22px;
+    font-size: 15px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  button:active {
+    background: #7a1c1c;
+  }
+</style>
+</head>
+<body>
+  <div class="caja">
+    <div class="sello">🕯️</div>
+    <h1>Sin conexión todavía</h1>
+    <p>
+      Esta es la primera vez que el Glosario Apócrifo intenta abrirse en este
+      dispositivo, y todavía no guardó una copia local. Conectate a internet
+      al menos una vez para que la app quede disponible sin conexión de ahí
+      en adelante.
+    </p>
+    <button onclick="location.reload()">Reintentar</button>
+  </div>
+</body>
+</html>
