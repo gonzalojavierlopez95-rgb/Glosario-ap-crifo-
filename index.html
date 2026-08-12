@@ -297,6 +297,284 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   .panel{display:none;}
   .panel.active{display:flex; flex-direction:column; flex:1; min-height:0;}
 
+  /* --- comunidad apócrifa: paleta propia (fiel al mockup v3), escopeada
+     a #panelComunidad para no alterar el resto del theming de la app --- */
+  #panelComunidad{
+    --cu-gold:#e8c15c;
+    --cu-gold-bright:#ffd873;
+    --cu-gold-dim:#a37f2c;
+    --cu-blood:#ff2b4d;
+    --cu-parchment:#f0e4c4;
+    --cu-void:#0a0705;
+    --cu-panel:#18130d;
+    --cu-panel-2:#221a11;
+    --cu-line:#4a3a1f;
+    --cu-line-soft:#2e2415;
+    --cu-text-dim:#ab9d82;
+    color:var(--cu-parchment);
+    gap:0;
+  }
+
+  .cu-stats{display:flex; gap:0.4rem; flex-shrink:0; margin-bottom:0.75rem;}
+  .cu-stat{
+    flex:1;
+    background:linear-gradient(180deg, var(--cu-panel-2), var(--cu-panel));
+    border:1px solid var(--cu-line);
+    border-radius:9px;
+    padding:0.6rem 0.3rem;
+    text-align:center;
+    box-shadow:inset 0 1px 0 rgba(232,193,92,0.06), 0 2px 6px rgba(0,0,0,0.4);
+  }
+  .cu-stat .cu-num{
+    font-family:'Cinzel', serif; color:var(--cu-gold-bright); font-size:1rem; font-weight:700;
+    text-shadow:0 0 8px rgba(232,193,92,0.3);
+  }
+  .cu-stat .cu-lbl{font-size:0.56rem; color:var(--cu-text-dim); text-transform:uppercase; letter-spacing:0.03em;}
+
+  .comunidad-search-row{display:flex; gap:0.4rem; flex-shrink:0; margin-bottom:0.85rem;}
+  .comunidad-search-row input{
+    flex:1;
+    background:var(--cu-panel);
+    border:1px solid var(--cu-line);
+    border-radius:9px;
+    padding:0.7rem 0.85rem;
+    color:var(--cu-parchment);
+    font-family:'EB Garamond', serif;
+    font-size:0.92rem;
+  }
+  .comunidad-search-row input::placeholder{color:var(--cu-text-dim);}
+  .cu-search-btn{
+    background:linear-gradient(180deg, var(--cu-gold), var(--cu-gold-dim));
+    border:none;
+    border-radius:9px;
+    width:2.6rem;
+    flex-shrink:0;
+    color:var(--cu-void);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 2px 8px rgba(232,193,92,0.25);
+  }
+
+  .cu-section-label{display:flex; align-items:center; gap:0.4rem; flex-shrink:0; padding-bottom:0.4rem;}
+  .cu-section-label .cu-line{flex:1; height:1px; background:linear-gradient(90deg, var(--cu-line), transparent);}
+  .cu-section-label span{
+    font-family:'Cinzel', serif; font-size:0.66rem; letter-spacing:0.11em; color:var(--cu-gold);
+    text-transform:uppercase; white-space:nowrap;
+  }
+  .cu-section-label span.cu-neon{color:var(--cu-blood); text-shadow:0 0 8px rgba(255,43,77,0.6);}
+
+  .tendencias-wrap{flex-shrink:0; margin-bottom:0.9rem;}
+  .tendencias-carousel{
+    display:flex;
+    gap:0.5rem;
+    overflow-x:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:0.15rem;
+  }
+  .tendencias-carousel::-webkit-scrollbar{display:none;}
+  .cu-chip{
+    all:unset;
+    cursor:pointer;
+    flex:0 0 auto;
+    background:linear-gradient(180deg, var(--cu-panel-2), var(--cu-panel));
+    border:1px solid var(--cu-gold-dim);
+    border-radius:14px;
+    padding:0.45rem 0.85rem;
+    font-family:'EB Garamond', serif;
+    font-size:0.78rem;
+    color:var(--cu-parchment);
+    display:flex; align-items:center; gap:0.35rem; white-space:nowrap;
+    box-sizing:border-box;
+    box-shadow:0 1px 4px rgba(0,0,0,0.4);
+  }
+  .cu-chip .cu-dot{width:5px; height:5px; border-radius:50%; background:var(--cu-blood); box-shadow:0 0 7px var(--cu-blood), 0 0 3px var(--cu-blood); flex-shrink:0;}
+
+  /* Acordeón tipo desplegable superpuesto: al abrir una categoría, ocupa
+     el espacio restante del bloque y tapa las de abajo sin agrandar la
+     pantalla ni desplazar el resto del contenido. */
+  .accordion{
+    position:relative;
+    flex-shrink:0;
+    display:flex; flex-direction:column;
+    border:1px solid var(--cu-line);
+    border-radius:11px;
+    overflow:hidden;
+    background:var(--cu-panel);
+    box-shadow:0 3px 10px rgba(0,0,0,0.45);
+    margin-bottom:0.9rem;
+  }
+  .accordion-item{position:relative;}
+  .accordion-item.open{z-index:5;}
+  .accordion-header{
+    all:unset;
+    cursor:pointer;
+    box-sizing:border-box;
+    width:100%;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0.82rem 0.9rem;
+    box-shadow:inset 0 -1px 0 var(--cu-line-soft);
+  }
+  .accordion-item:last-child .accordion-header{box-shadow:none;}
+  .accordion-item.open .accordion-header{box-shadow:none; background:rgba(232,193,92,0.06);}
+  .accordion-header-left{display:flex; align-items:center; gap:0.5rem;}
+  .accordion-icon{font-size:0.8rem;}
+  .accordion-title{font-family:'Cinzel', serif; font-size:0.78rem; letter-spacing:0.07em; color:var(--cu-parchment); text-transform:uppercase;}
+  .accordion-count{
+    font-size:0.62rem; color:var(--cu-void); background:var(--cu-gold-dim);
+    padding:0.1rem 0.5rem; border-radius:9px; font-weight:600;
+  }
+  .accordion-caret{color:var(--cu-gold); transition:transform 0.25s ease; font-size:0.65rem;}
+  .accordion-item.open .accordion-caret{transform:rotate(90deg); color:var(--cu-gold-bright);}
+  .accordion-body{
+    position:absolute; top:calc(100% - 1px); left:-1px; right:-1px;
+    height:0; overflow:hidden; transition:height 0.3s ease;
+    background:var(--cu-panel-2);
+    z-index:30;
+    border-top:1px solid var(--cu-line-soft);
+    box-shadow:0 10px 22px rgba(0,0,0,0.55);
+  }
+  .accordion-item.open .accordion-body{overflow-y:auto; scrollbar-width:none;}
+  .accordion-item.open .accordion-body::-webkit-scrollbar{display:none;}
+  .accordion-body-inner{padding:0.45rem 0.75rem 0.85rem;}
+  .estilo-chips{display:flex; flex-wrap:wrap; gap:0.4rem;}
+  .estilo-chip{
+    all:unset;
+    cursor:pointer;
+    box-sizing:border-box;
+    background:var(--cu-void);
+    border:1px solid var(--cu-line);
+    border-radius:7px;
+    padding:0.35rem 0.6rem;
+    font-family:'EB Garamond', serif;
+    font-size:0.72rem;
+    color:var(--cu-text-dim);
+  }
+  .estilo-chip.has-content{color:var(--cu-gold-bright); border-color:var(--cu-gold-dim); background:rgba(232,193,92,0.07);}
+  .estilo-chip.active{background:var(--cu-gold); color:var(--cu-void); border-color:var(--cu-gold); font-weight:600;}
+
+  .comunidad-word-list{display:flex; flex-direction:column; gap:0.45rem; margin-top:0.55rem;}
+  .comunidad-word{
+    background:var(--cu-void);
+    border:1px solid var(--cu-line);
+    border-radius:8px;
+    padding:0.5rem 0.65rem;
+  }
+  .comunidad-word-title{
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    font-size:0.88rem;
+    color:var(--cu-parchment);
+    margin-bottom:0.15rem;
+  }
+  .comunidad-word-def{
+    font-family:'EB Garamond', serif;
+    font-size:0.82rem;
+    color:var(--cu-text-dim);
+    line-height:1.4;
+  }
+  .comunidad-word-autor{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:0.68rem;
+    color:var(--cu-gold-dim);
+    margin-top:0.25rem;
+  }
+  .comunidad-loading, .comunidad-vacio{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:0.8rem;
+    color:var(--cu-text-dim);
+    padding:0.3rem 0.05rem;
+  }
+
+  .cu-search-results-wrap{flex:1; min-height:0; overflow-y:auto; scrollbar-width:none; margin-bottom:0.9rem;}
+  .cu-search-results-wrap::-webkit-scrollbar{display:none;}
+
+  .cu-cards{flex-shrink:0; display:flex; flex-direction:column; gap:0.6rem;}
+  .cu-row-inline{display:flex; gap:0.6rem;}
+  .cu-row-inline .cu-card{flex:1; min-width:0;}
+  .cu-card{
+    background:linear-gradient(160deg, var(--cu-panel-2), var(--cu-panel));
+    border:1px solid var(--cu-line);
+    border-radius:10px;
+    padding:0.7rem 0.75rem;
+    box-sizing:border-box;
+  }
+  .cu-card-title{
+    display:flex; align-items:center; gap:0.35rem; font-family:'Cinzel', serif; font-size:0.62rem;
+    letter-spacing:0.05em; color:var(--cu-gold); text-transform:uppercase; margin-bottom:0.5rem;
+  }
+  .cu-rank-row{display:flex; justify-content:space-between; font-size:0.78rem; padding:0.22rem 0; color:var(--cu-parchment); gap:0.4rem;}
+  .cu-rank-row span:first-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .cu-rank-row .cu-n{color:var(--cu-gold-dim); font-weight:600; flex-shrink:0;}
+  .cu-placeholder{font-family:'EB Garamond', serif; font-style:italic; font-size:0.76rem; color:var(--cu-text-dim); line-height:1.4;}
+  .cu-aportar-desc{font-size:0.76rem; color:var(--cu-text-dim); line-height:1.4; font-family:'EB Garamond', serif;}
+  .cu-aportar-btn{
+    all:unset;
+    box-sizing:border-box;
+    cursor:pointer;
+    display:block;
+    width:100%;
+    text-align:center;
+    background:linear-gradient(180deg, var(--cu-gold-bright), var(--cu-gold-dim));
+    color:var(--cu-void);
+    border-radius:8px; padding:0.7rem;
+    font-family:'Cinzel', serif;
+    font-size:0.66rem; letter-spacing:0.07em; text-transform:uppercase; margin-top:0.55rem; font-weight:700;
+    box-shadow:0 3px 10px rgba(232,193,92,0.3);
+  }
+
+  /* modal de aportar */
+  .cu-modal-overlay{
+    display:none;
+    position:fixed; inset:0; z-index:200;
+    background:rgba(0,0,0,0.65);
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .cu-modal-overlay.open{display:flex;}
+  .cu-modal{
+    width:100%; max-width:430px;
+    max-height:85vh;
+    overflow-y:auto;
+    background:linear-gradient(180deg, #221a11, #18130d);
+    border:1px solid #4a3a1f;
+    border-bottom:none;
+    border-radius:16px 16px 0 0;
+    padding:1.1rem 1.1rem 1.4rem;
+    box-sizing:border-box;
+    color:#f0e4c4;
+  }
+  .cu-modal-title{
+    font-family:'Cinzel', serif; font-size:1rem; letter-spacing:0.05em;
+    color:#e8c15c; margin:0 0 0.9rem; text-align:center;
+  }
+  .cu-modal label{
+    display:block; font-family:'Cinzel', serif; font-size:0.6rem; letter-spacing:0.08em;
+    text-transform:uppercase; color:#a37f2c; margin:0.7rem 0 0.35rem;
+  }
+  .cu-modal input[type=text], .cu-modal textarea{
+    width:100%; box-sizing:border-box;
+    background:#0a0705; border:1px solid #4a3a1f; border-radius:8px;
+    padding:0.6rem 0.7rem; color:#f0e4c4; font-family:'EB Garamond', serif; font-size:0.9rem;
+    resize:vertical;
+  }
+  .cu-modal-estilos{display:flex; flex-wrap:wrap; gap:0.4rem;}
+  .cu-modal-actions{display:flex; gap:0.5rem; margin-top:1.1rem;}
+  .cu-modal-cancel{
+    all:unset; cursor:pointer; box-sizing:border-box; flex:1; text-align:center;
+    border:1px solid #4a3a1f; border-radius:8px; padding:0.65rem;
+    font-family:'Cinzel', serif; font-size:0.68rem; letter-spacing:0.05em; text-transform:uppercase; color:#ab9d82;
+  }
+  .cu-modal-submit{
+    all:unset; cursor:pointer; box-sizing:border-box; flex:2; text-align:center;
+    background:linear-gradient(180deg, #ffd873, #a37f2c); color:#0a0705;
+    border-radius:8px; padding:0.65rem;
+    font-family:'Cinzel', serif; font-size:0.68rem; letter-spacing:0.05em; text-transform:uppercase; font-weight:700;
+  }
+  .cu-modal-submit:disabled{opacity:0.55;}
+
   /* --- cazapalabras --- */
   .catch-form{
     display:flex;
@@ -1222,6 +1500,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   <div class="tabs">
     <button class="tab-btn active" id="tabGlosario" type="button">Glosario</button>
     <button class="tab-btn" id="tabCaza" type="button">Cazapalabras</button>
+    <button class="tab-btn" id="tabComunidad" type="button">Comunidad</button>
   </div>
 
   <div class="page">
@@ -1284,6 +1563,80 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       </div>
       <div class="catch-list" id="catchList"></div>
       <div class="empty" id="catchEmpty" style="display:none;" data-i18n="catchEmpty">Todavía no atrapaste ninguna palabra.</div>
+    </div>
+
+    <div class="panel" id="panelComunidad">
+      <div class="cu-stats" id="cuStats">
+        <div class="cu-stat"><div class="cu-num" id="cuStatPalabras">—</div><div class="cu-lbl">Palabras</div></div>
+        <div class="cu-stat"><div class="cu-num" id="cuStatAportes">—</div><div class="cu-lbl">Aportes</div></div>
+        <div class="cu-stat"><div class="cu-num" id="cuStatConsultas" title="Llega en Fase 9">—</div><div class="cu-lbl">Consultas</div></div>
+        <div class="cu-stat"><div class="cu-num" id="cuStatVotos" title="Llega en Fase 5">—</div><div class="cu-lbl">Votos</div></div>
+      </div>
+
+      <div class="comunidad-search-row">
+        <input id="comunidadSearchInput" type="text" placeholder="Buscar palabra o frase..." autocomplete="off">
+        <button type="button" class="cu-search-btn" aria-label="Buscar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.2" y2="16.2"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div id="cuExploreView">
+        <div class="tendencias-wrap" id="tendenciasWrap">
+          <div class="cu-section-label"><span class="cu-neon">Tendencias</span><div class="cu-line"></div></div>
+          <div class="tendencias-carousel" id="tendenciasCarousel">
+            <div class="comunidad-loading">Cargando tendencias...</div>
+          </div>
+        </div>
+
+        <div class="cu-section-label"><span>Explorá por estilos</span><div class="cu-line"></div></div>
+        <div class="accordion" id="comunidadAccordion">
+          <div class="comunidad-loading" style="padding:0.9rem;">Cargando categorías...</div>
+        </div>
+
+        <div class="cu-cards">
+          <div class="cu-row-inline">
+            <div class="cu-card">
+              <div class="cu-card-title">⭐ Más aportadas</div>
+              <div id="cuMasAportadas"><div class="comunidad-loading">Cargando...</div></div>
+            </div>
+            <div class="cu-card">
+              <div class="cu-card-title">🏆 Del mes</div>
+              <div class="cu-placeholder">Próximamente — se activa en Fase 9/10, con el ranking mensual.</div>
+            </div>
+          </div>
+          <div class="cu-card">
+            <div class="cu-card-title">🖋 Aportá tu palabra</div>
+            <div class="cu-aportar-desc">Sumá una palabra o frase y dejá tu huella en la comunidad.</div>
+            <button type="button" class="cu-aportar-btn" id="cuAportarBtn">Aportar ahora</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cu-search-results-wrap" id="cuSearchResultsWrap" style="display:none;">
+        <div class="cu-section-label"><span>Resultados</span><div class="cu-line"></div></div>
+        <div class="comunidad-word-list" id="comunidadSearchResults"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cu-modal-overlay" id="cuModalOverlay">
+    <div class="cu-modal">
+      <div class="cu-modal-title">Aportá tu palabra</div>
+      <label for="cuModalPalabra">Palabra o frase</label>
+      <input type="text" id="cuModalPalabra" placeholder="Ej: Umbra">
+      <label for="cuModalSignificado">Significado</label>
+      <textarea id="cuModalSignificado" rows="3" placeholder="¿Qué significa dentro del Universo Apócrifo?"></textarea>
+      <label for="cuModalAutor">Tu nombre (opcional)</label>
+      <input type="text" id="cuModalAutor" placeholder="Anónimo">
+      <label>Estilos (opcional)</label>
+      <div class="cu-modal-estilos" id="cuModalEstilos"><span class="cu-placeholder">Cargando estilos...</span></div>
+      <div class="cu-modal-actions">
+        <button type="button" class="cu-modal-cancel" id="cuModalCancel">Cancelar</button>
+        <button type="button" class="cu-modal-submit" id="cuModalSubmit">Enviar aporte</button>
+      </div>
     </div>
   </div>
 
@@ -2151,12 +2504,15 @@ vistaCompletaBtn.addEventListener('click', () => {
 /* --- pestañas --- */
 const tabGlosario = document.getElementById('tabGlosario');
 const tabCaza = document.getElementById('tabCaza');
+const tabComunidad = document.getElementById('tabComunidad');
 const panelGlosario = document.getElementById('panelGlosario');
 const panelCaza = document.getElementById('panelCaza');
+const panelComunidad = document.getElementById('panelComunidad');
 const indexNav = document.getElementById('index');
 const bookEl = document.getElementById('book');
 
 const LAST_TAB_KEY = 'glosario_apocrifo_ultima_tab';
+const TABS_VALIDAS = ['glosario', 'caza', 'comunidad'];
 
 function guardarUltimaTab(tab){
   try{ localStorage.setItem(LAST_TAB_KEY, tab); }catch(e){}
@@ -2165,7 +2521,7 @@ function guardarUltimaTab(tab){
 function leerUltimaTab(){
   try{
     const guardada = localStorage.getItem(LAST_TAB_KEY);
-    return guardada === 'caza' ? 'caza' : 'glosario';
+    return TABS_VALIDAS.includes(guardada) ? guardada : 'glosario';
   }catch(e){
     return 'glosario';
   }
@@ -2209,27 +2565,358 @@ document.addEventListener('visibilitychange', () => {
 
 function showTab(tab){
   const esGlosario = tab === 'glosario';
+  const esCaza = tab === 'caza';
+  const esComunidad = tab === 'comunidad';
+
   tabGlosario.classList.toggle('active', esGlosario);
-  tabCaza.classList.toggle('active', !esGlosario);
+  tabCaza.classList.toggle('active', esCaza);
+  tabComunidad.classList.toggle('active', esComunidad);
   panelGlosario.classList.toggle('active', esGlosario);
-  panelCaza.classList.toggle('active', !esGlosario);
+  panelCaza.classList.toggle('active', esCaza);
+  panelComunidad.classList.toggle('active', esComunidad);
+
   bookEl.classList.toggle('tab-glosario', esGlosario);
   indexNav.style.display = esGlosario ? 'flex' : 'none';
   document.getElementById('backupWrap').classList.toggle('hidden', !esGlosario);
+
   const panelFrases = document.getElementById('phrasesPanel');
-  if(esGlosario){
-    panelFrases.style.display = 'none';
-    panelFrases.classList.remove('phrases-visible');
-  } else {
+  if(esCaza){
     panelFrases.style.display = 'flex';
     panelFrases.classList.remove('phrases-visible');
     void panelFrases.offsetWidth;
     panelFrases.classList.add('phrases-visible');
+  } else {
+    panelFrases.style.display = 'none';
+    panelFrases.classList.remove('phrases-visible');
   }
+
   guardarUltimaTab(tab);
 }
 tabGlosario.addEventListener('click', () => showTab('glosario'));
 tabCaza.addEventListener('click', () => { showTab('caza'); actualizarFraseCaza(); });
+tabComunidad.addEventListener('click', () => { showTab('comunidad'); cargarComunidadInicial(); });
+
+/* --- Comunidad Apócrifa: aportar → aprobar → ver (Fase 4) ---
+   Endpoints del Worker:
+   - GET  /api/comunidad/estilos   -> arma el acordeón por categoria_padre,
+     con la cantidad de palabras aprobadas de cada estilo.
+   - GET  /api/comunidad/palabras  -> palabras con estado='aprobado',
+     sin filtro, por ?estilo=id, o por ?q=texto (buscador).
+   - GET  /api/comunidad/stats     -> contadores reales para la barra de arriba.
+   - POST /api/comunidad/aportar   -> el mismo endpoint de la Fase 2, ahora
+     con una UI real (el modal "Aportá tu palabra") en vez del formulario de prueba. */
+
+const CU_ICONOS = { 'Raíces': '🌳', 'Época': '📜', 'Estilo': '🪶', 'Apócrifo': '🪽' };
+let comunidadCargada = false;
+let comunidadEstilosCache = [];
+
+async function cargarComunidadInicial(){
+  if(comunidadCargada) return;
+  comunidadCargada = true;
+  cargarStats();
+  cargarEstilosYTendenciasYRanking();
+}
+
+async function cargarStats(){
+  try{
+    const res = await fetch('/api/comunidad/stats');
+    const data = await res.json();
+    document.getElementById('cuStatPalabras').textContent = formatearNumero(data.palabras);
+    document.getElementById('cuStatAportes').textContent = formatearNumero(data.aportes);
+    document.getElementById('cuStatConsultas').textContent = data.consultas === null ? '—' : formatearNumero(data.consultas);
+    document.getElementById('cuStatVotos').textContent = data.votos === null ? '—' : formatearNumero(data.votos);
+  }catch(err){
+    // si falla, la barra queda con los guiones iniciales — no rompe nada
+  }
+}
+
+function formatearNumero(n){
+  if(typeof n !== 'number') return '—';
+  return n.toLocaleString('es-AR');
+}
+
+async function cargarEstilosYTendenciasYRanking(){
+  const acc = document.getElementById('comunidadAccordion');
+  const tendCont = document.getElementById('tendenciasCarousel');
+  try{
+    const res = await fetch('/api/comunidad/estilos');
+    const data = await res.json();
+    const estilos = (data.estilos || []).map(e => ({ ...e, aprobadas: Number(e.aprobadas) || 0 }));
+    comunidadEstilosCache = estilos;
+
+    renderAcordeon(estilos);
+    renderTendencias(estilos);
+    renderMasAportadas(estilos);
+    renderEstilosDelModal(estilos);
+
+  }catch(err){
+    acc.innerHTML = '<div class="comunidad-loading" style="padding:0.9rem;">No se pudieron cargar las categorías. Revisá tu conexión.</div>';
+    tendCont.innerHTML = '<div class="comunidad-vacio">No se pudieron cargar las tendencias.</div>';
+  }
+}
+
+function renderAcordeon(estilos){
+  const cont = document.getElementById('comunidadAccordion');
+
+  if(estilos.length === 0){
+    cont.innerHTML = '<div class="comunidad-loading" style="padding:0.9rem;">Todavía no hay categorías cargadas en la Comunidad. Cuando agregues estilos en D1, van a aparecer acá agrupados por categoría.</div>';
+    return;
+  }
+
+  const porCategoria = {};
+  estilos.forEach(e => {
+    const cat = e.categoria_padre || 'Sin categoría';
+    if(!porCategoria[cat]) porCategoria[cat] = [];
+    porCategoria[cat].push(e);
+  });
+
+  cont.innerHTML = Object.keys(porCategoria).map(cat => `
+    <div class="accordion-item" data-categoria="${escapeHtml(cat)}">
+      <button type="button" class="accordion-header">
+        <div class="accordion-header-left">
+          <span class="accordion-icon">${CU_ICONOS[cat] || '🗂'}</span>
+          <span class="accordion-title">${escapeHtml(cat)}</span>
+          <span class="accordion-count">${porCategoria[cat].length}</span>
+        </div>
+        <span class="accordion-caret">▸</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">
+          <div class="estilo-chips">
+            ${porCategoria[cat].map(e => `<button type="button" class="estilo-chip${e.aprobadas > 0 ? ' has-content' : ''}" data-estilo-id="${e.id}" data-estilo-nombre="${escapeHtml(e.nombre)}">${escapeHtml(e.nombre)}</button>`).join('')}
+          </div>
+          <div class="comunidad-word-list" data-resultados></div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  cont.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => toggleAcordeon(header));
+  });
+
+  cont.querySelectorAll('.estilo-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const yaActivo = chip.classList.contains('active');
+      const body = chip.closest('.accordion-body');
+      const listaResultados = body.querySelector('[data-resultados]');
+      body.querySelectorAll('.estilo-chip').forEach(c => c.classList.remove('active'));
+      if(yaActivo){
+        listaResultados.innerHTML = '';
+        ajustarAlturaAcordeonAbierto();
+        return;
+      }
+      chip.classList.add('active');
+      cargarPalabrasPorEstilo(chip.dataset.estiloId, listaResultados);
+    });
+  });
+}
+
+// Desplegable superpuesto: la categoría abierta ocupa el espacio restante
+// del bloque del acordeón y tapa a las que están debajo, sin empujar el
+// resto de la pantalla ni dejar líneas sueltas entre botones colapsados.
+function toggleAcordeon(header){
+  const item = header.closest('.accordion-item');
+  const accordion = item.closest('.accordion');
+  const wasOpen = item.classList.contains('open');
+
+  const accHeight = accordion.getBoundingClientRect().height;
+  const headerHeight = header.getBoundingClientRect().height;
+
+  accordion.querySelectorAll('.accordion-item').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.accordion-body').style.height = '0px';
+  });
+
+  if(!wasOpen){
+    item.classList.add('open');
+    const body = item.querySelector('.accordion-body');
+    const disponible = accHeight - headerHeight + 4;
+    body.style.height = Math.max(disponible, 0) + 'px';
+  }
+}
+
+// Cuando el contenido de una categoría abierta cambia de tamaño (por ej.
+// al mostrar/ocultar los resultados de un estilo), recalcula la altura
+// del desplegable para que no quede contenido cortado ni un hueco vacío.
+function ajustarAlturaAcordeonAbierto(){
+  const abierto = document.querySelector('.accordion-item.open');
+  if(!abierto) return;
+  const accordion = abierto.closest('.accordion');
+  const header = abierto.querySelector('.accordion-header');
+  const accHeight = accordion.getBoundingClientRect().height;
+  const headerHeight = header.getBoundingClientRect().height;
+  const body = abierto.querySelector('.accordion-body');
+  body.style.height = Math.max(accHeight - headerHeight + 4, 0) + 'px';
+}
+
+async function cargarPalabrasPorEstilo(estiloId, contenedor){
+  contenedor.innerHTML = '<div class="comunidad-loading">Buscando aportes aprobados...</div>';
+  ajustarAlturaAcordeonAbierto();
+  try{
+    const res = await fetch('/api/comunidad/palabras?estilo=' + encodeURIComponent(estiloId));
+    const data = await res.json();
+    contenedor.innerHTML = renderListaPalabras(data.palabras || []);
+  }catch(err){
+    contenedor.innerHTML = '<div class="comunidad-vacio">No se pudieron cargar los aportes de este estilo.</div>';
+  }
+  ajustarAlturaAcordeonAbierto();
+}
+
+function renderListaPalabras(palabras){
+  if(palabras.length === 0){
+    return '<div class="comunidad-vacio">Todavía no hay aportes aprobados en esta categoría.</div>';
+  }
+  return palabras.map(p => `
+    <div class="comunidad-word">
+      <div class="comunidad-word-title">${escapeHtml(p.palabra)}</div>
+      <div class="comunidad-word-def">${escapeHtml(p.significado)}</div>
+      <div class="comunidad-word-autor">Aportado por ${escapeHtml(p.autor_id || 'anónimo')}</div>
+    </div>
+  `).join('');
+}
+
+// "Tendencias": como todavía no existe el registro de consultas (Fase 9),
+// se muestran los estilos con más palabras aprobadas hoy — un indicador
+// real, no inventado, de qué se está moviendo en la Comunidad.
+function renderTendencias(estilos){
+  const cont = document.getElementById('tendenciasCarousel');
+  const conContenido = estilos.filter(e => e.aprobadas > 0).sort((a, b) => b.aprobadas - a.aprobadas).slice(0, 8);
+  if(conContenido.length === 0){
+    cont.innerHTML = '<div class="comunidad-vacio">Todavía no hay aportes aprobados. ¡Sé el primero!</div>';
+    return;
+  }
+  cont.innerHTML = conContenido.map(e => `
+    <button type="button" class="cu-chip" data-estilo-id="${e.id}"><span class="cu-dot"></span>${escapeHtml(e.nombre)}</button>
+  `).join('');
+  cont.querySelectorAll('.cu-chip').forEach(chip => {
+    chip.addEventListener('click', () => abrirCategoriaDeEstilo(chip.dataset.estiloId));
+  });
+}
+
+// Al tocar una tendencia, abre la categoría a la que pertenece ese estilo
+// y lo selecciona directamente, para no duplicar la lógica de carga.
+function abrirCategoriaDeEstilo(estiloId){
+  const chipDelAcordeon = document.querySelector('.estilo-chip[data-estilo-id="' + estiloId + '"]');
+  if(!chipDelAcordeon) return;
+  const item = chipDelAcordeon.closest('.accordion-item');
+  if(!item.classList.contains('open')){
+    toggleAcordeon(item.querySelector('.accordion-header'));
+  }
+  chipDelAcordeon.click();
+  item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderMasAportadas(estilos){
+  const cont = document.getElementById('cuMasAportadas');
+  const top = estilos.filter(e => e.aprobadas > 0).sort((a, b) => b.aprobadas - a.aprobadas).slice(0, 3);
+  if(top.length === 0){
+    cont.innerHTML = '<div class="cu-placeholder">Todavía no hay aportes aprobados.</div>';
+    return;
+  }
+  cont.innerHTML = top.map(e => `
+    <div class="cu-rank-row"><span>${escapeHtml(e.nombre)}</span><span class="cu-n">${e.aprobadas}</span></div>
+  `).join('');
+}
+
+function renderEstilosDelModal(estilos){
+  const cont = document.getElementById('cuModalEstilos');
+  if(estilos.length === 0){
+    cont.innerHTML = '<span class="cu-placeholder">Todavía no hay estilos cargados — se puede aportar igual, sin categoría.</span>';
+    return;
+  }
+  cont.innerHTML = estilos.map(e => `<button type="button" class="estilo-chip" data-estilo-id="${e.id}">${escapeHtml(e.nombre)}</button>`).join('');
+  cont.querySelectorAll('.estilo-chip').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('active'));
+  });
+}
+
+let comunidadBusquedaTimer = null;
+document.getElementById('comunidadSearchInput').addEventListener('input', (e) => {
+  const q = e.target.value.trim();
+  clearTimeout(comunidadBusquedaTimer);
+  comunidadBusquedaTimer = setTimeout(() => ejecutarBusquedaComunidad(q), 320);
+});
+
+async function ejecutarBusquedaComunidad(q){
+  const exploreView = document.getElementById('cuExploreView');
+  const resultsWrap = document.getElementById('cuSearchResultsWrap');
+  const resultadosEl = document.getElementById('comunidadSearchResults');
+
+  if(!q){
+    resultsWrap.style.display = 'none';
+    exploreView.style.display = '';
+    return;
+  }
+
+  exploreView.style.display = 'none';
+  resultsWrap.style.display = 'block';
+  resultadosEl.innerHTML = '<div class="comunidad-loading">Buscando "' + escapeHtml(q) + '"...</div>';
+
+  try{
+    const res = await fetch('/api/comunidad/palabras?q=' + encodeURIComponent(q));
+    const data = await res.json();
+    resultadosEl.innerHTML = renderListaPalabras(data.palabras || []);
+  }catch(err){
+    resultadosEl.innerHTML = '<div class="comunidad-vacio">No se pudo completar la búsqueda. Revisá tu conexión.</div>';
+  }
+}
+
+/* --- Modal "Aportá tu palabra" (cierra el circuito aportar→aprobar→ver) --- */
+const cuModalOverlay = document.getElementById('cuModalOverlay');
+const cuModalPalabra = document.getElementById('cuModalPalabra');
+const cuModalSignificado = document.getElementById('cuModalSignificado');
+const cuModalAutor = document.getElementById('cuModalAutor');
+const cuModalSubmit = document.getElementById('cuModalSubmit');
+
+document.getElementById('cuAportarBtn').addEventListener('click', () => {
+  cuModalOverlay.classList.add('open');
+});
+document.getElementById('cuModalCancel').addEventListener('click', cerrarModalAportar);
+cuModalOverlay.addEventListener('click', (e) => {
+  if(e.target === cuModalOverlay) cerrarModalAportar();
+});
+
+function cerrarModalAportar(){
+  cuModalOverlay.classList.remove('open');
+  cuModalPalabra.value = '';
+  cuModalSignificado.value = '';
+  cuModalAutor.value = '';
+  document.querySelectorAll('#cuModalEstilos .estilo-chip.active').forEach(c => c.classList.remove('active'));
+}
+
+cuModalSubmit.addEventListener('click', async () => {
+  const palabra = cuModalPalabra.value.trim();
+  const significado = cuModalSignificado.value.trim();
+  const autor = cuModalAutor.value.trim();
+  const estilos = Array.from(document.querySelectorAll('#cuModalEstilos .estilo-chip.active')).map(c => Number(c.dataset.estiloId));
+
+  if(!palabra || !significado){
+    mostrarToast('Completá la palabra y el significado.');
+    return;
+  }
+
+  cuModalSubmit.disabled = true;
+  cuModalSubmit.textContent = 'Enviando...';
+
+  try{
+    const res = await fetch('/api/comunidad/aportar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ palabra, significado, autor, estilos })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Error al enviar');
+
+    cerrarModalAportar();
+    mostrarToast('¡Gracias! Tu aporte quedó pendiente de aprobación.');
+  }catch(err){
+    mostrarToast('No se pudo enviar el aporte. Probá de nuevo.');
+  }finally{
+    cuModalSubmit.disabled = false;
+    cuModalSubmit.textContent = 'Enviar aporte';
+  }
+});
 /* La restauración de la última pestaña usada se hace más abajo, después
    de que FRASES_APOCRIFAS y phraseCol1 ya existen (antes estaba acá
    arriba y rompía la carga si la última pestaña era Caza). */
@@ -2305,6 +2992,7 @@ mostrarFraseRandom();
   const tabInicial = pasoMuchoTiempoAfuera() ? 'glosario' : leerUltimaTab();
   showTab(tabInicial);
   if(tabInicial === 'caza') actualizarFraseCaza();
+  if(tabInicial === 'comunidad') cargarComunidadInicial();
 }
 
 let ultimoScroll = obtenerScrollY();
