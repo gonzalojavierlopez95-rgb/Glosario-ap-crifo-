@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: sans-serif; padding: 20px;">
+  <h1>Test — Aportar palabra (temporal)</h1>
+  <input id="palabra" placeholder="palabra" style="display:block; margin-bottom:10px; padding:8px; width:300px;"><br>
+  <input id="significado" placeholder="significado" style="display:block; margin-bottom:10px; padding:8px; width:300px;"><br>
+  <button onclick="enviar()" style="padding:8px 16px;">Enviar</button>
+  <pre id="resultado" style="margin-top:20px; background:#eee; padding:10px;"></pre>
+
+  <script>
+    async function enviar() {
+      const res = await fetch('/api/comunidad/aportar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          palabra: document.getElementById('palabra').value,
+          significado: document.getElementById('significado').value,
+          estilos: []
+        })
+      });
+      const data = await res.json();
+      document.getElementById('resultado').textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
