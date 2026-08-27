@@ -1,0 +1,29 @@
+{
+  "name": "glosario-ap-crifo1",
+  "compatibility_date": "2026-01-01",
+  "main": "worker.js",
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "glosario_comunidad",
+      "database_id": "f2c63a5c-8427-4288-a465-a68499f014c0"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "2aeeb0204aa04720b30175ef2bd0f5b9"
+    }
+  ],
+  "triggers": {
+    // FASE 9 — corre el día 1 de cada mes a las 00:00 UTC y calcula el
+    // ranking (Índice Apócrifo) del mes recién cerrado.
+    "crons": ["0 0 1 * *"]
+  }
+}
