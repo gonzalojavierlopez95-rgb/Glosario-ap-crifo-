@@ -1,0 +1,1294 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Panel Apócrifo" />
+<meta name="theme-color" content="#0d0906" />
+<link rel="manifest" href="manifest-admin.json" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj4KPHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHJ4PSIzOCIgZmlsbD0iIzE0MGYwOSIvPgo8cmVjdCB4PSI2IiB5PSI2IiB3aWR0aD0iMTg4IiBoZWlnaHQ9IjE4OCIgcng9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiM1NTQzMWYiIHN0cm9rZS13aWR0aD0iMyIvPgo8dGV4dCB4PSIxMDAiIHk9IjE0MiIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIENhbWJyaWEsIHNlcmlmIiBmb250LXNpemU9IjEyOCIgZmlsbD0iI2U4YzE1YyIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QTwvdGV4dD4KPC9zdmc+" />
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj4KPHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHJ4PSIzOCIgZmlsbD0iIzE0MGYwOSIvPgo8cmVjdCB4PSI2IiB5PSI2IiB3aWR0aD0iMTg4IiBoZWlnaHQ9IjE4OCIgcng9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiM1NTQzMWYiIHN0cm9rZS13aWR0aD0iMyIvPgo8dGV4dCB4PSIxMDAiIHk9IjE0MiIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIENhbWJyaWEsIHNlcmlmIiBmb250LXNpemU9IjEyOCIgZmlsbD0iI2U4YzE1YyIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QTwvdGV4dD4KPC9zdmc+" />
+<link rel="apple-touch-icon" href="icon-admin-192.png" />
+<title>Panel Apócrifo — Moderación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{
+    margin:0; height:100dvh; overflow:hidden;
+    background:
+      radial-gradient(ellipse 140% 50% at 50% 0%, rgba(232,193,92,0.06), transparent 60%),
+      #0d0906;
+    color:#f0e4c4;
+    font-family:'EB Garamond', serif;
+    padding:1.1rem 1rem 0;
+    display:flex; flex-direction:column;
+  }
+  h1{
+    flex-shrink:0;
+    font-family:'Cinzel', serif; font-size:1.25rem; letter-spacing:0.04em;
+    color:#f0d68a; text-align:center; margin:0.4rem 0 0.2rem;
+    text-shadow:0 0 18px rgba(232,193,92,0.2);
+  }
+  .sub{
+    flex-shrink:0;
+    text-align:center; color:#a89876; font-size:0.85rem; margin:0 0 1.4rem;
+  }
+
+  /* pantalla de clave */
+  .gate{
+    max-width:380px; margin:3rem auto 0;
+    background:linear-gradient(180deg,#241b12,#140f09);
+    border:1px solid #55431f; border-radius:14px; padding:1.5rem;
+    box-shadow:0 8px 30px rgba(0,0,0,0.5);
+  }
+  .gate label{
+    display:block; font-family:'Cinzel', serif; font-size:0.62rem; letter-spacing:0.1em;
+    text-transform:uppercase; color:#8a7a5a; margin-bottom:0.5rem;
+  }
+  input[type=password]{
+    width:100%; background:#0a0705; border:1px solid #55431f; border-radius:10px;
+    padding:0.8rem 0.9rem; color:#f0e4c4; font-family:'EB Garamond', serif; font-size:1rem;
+  }
+  input[type=password]:focus{outline:none; border-color:#c99a3e; box-shadow:0 0 0 3px rgba(232,193,92,0.12);}
+  button{
+    all:unset; cursor:pointer; box-sizing:border-box; text-align:center;
+    font-family:'Cinzel', serif; letter-spacing:0.05em; text-transform:uppercase;
+  }
+  .btn-primary{
+    display:block; width:100%; margin-top:1rem; padding:0.8rem;
+    background:linear-gradient(180deg,#ffe08a,#b8862f); border:1px solid #e8c15c;
+    color:#1a1206; font-weight:700; font-size:0.75rem; border-radius:10px;
+  }
+  .gate-error{color:#e08a8a; font-size:0.8rem; text-align:center; margin-top:0.8rem; display:none;}
+
+  /* lista de pendientes */
+  #app{
+    display:none; max-width:520px; margin:0 auto; width:100%;
+    flex:1; min-height:0; flex-direction:column;
+  }
+  .stats-bar{
+    flex-shrink:0;
+    display:flex; justify-content:center; gap:1.2rem; margin-bottom:1.2rem;
+    font-family:'Cinzel', serif; font-size:0.7rem; color:#a89876; text-transform:uppercase; letter-spacing:0.05em;
+  }
+  .stats-bar b{color:#e8c15c; font-size:0.95rem; display:block; text-align:center;}
+  .empty{
+    text-align:center; color:#7a6c50; font-style:italic; padding:3rem 1rem; font-size:0.95rem;
+  }
+  .card{
+    background:linear-gradient(180deg,#1c150d,#120d08);
+    border:1px solid #4a3a1f; border-radius:14px; padding:1.1rem 1.15rem;
+    margin-bottom:1rem; box-shadow:inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+  .card.dup{border-color:#6b4a1f;}
+  .card-top{display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem; margin-bottom:0.5rem;}
+  .card-palabra{font-family:'Cinzel', serif; font-size:1.15rem; color:#f5dd96; letter-spacing:0.02em;}
+  .card-fecha{font-size:0.72rem; color:#7a6c50; white-space:nowrap;}
+  .card-significado{font-size:0.92rem; color:#d8c9a3; line-height:1.5; margin-bottom:0.6rem;}
+  .card-meta{font-size:0.72rem; color:#8a7a5a; margin-bottom:0.7rem;}
+  .dup-flag{
+    display:inline-block; font-family:'Cinzel', serif; font-size:0.62rem; letter-spacing:0.05em;
+    text-transform:uppercase; color:#e0a86b; background:rgba(139,90,30,0.18);
+    border:1px solid #6b4a1f; border-radius:6px; padding:0.2rem 0.5rem; margin-bottom:0.6rem;
+  }
+  .card-actions{display:flex; gap:0.6rem;}
+  .btn-aprobar, .btn-rechazar{
+    flex:1; padding:0.65rem; border-radius:9px; font-size:0.68rem;
+  }
+  .btn-aprobar{background:linear-gradient(180deg,#ffe08a,#b8862f); border:1px solid #e8c15c; color:#1a1206; font-weight:700;}
+  .btn-rechazar{background:rgba(139,58,58,0.12); border:1px solid #6b3a3a; color:#e0a0a0;}
+  .btn-aprobar:active, .btn-rechazar:active{filter:brightness(0.9);}
+  .btn-aprobar:disabled, .btn-rechazar:disabled{opacity:0.4; pointer-events:none;}
+  .refresh-btn{
+    flex-shrink:0;
+    display:block; margin:0 auto 1.3rem; padding:0.5rem 1.1rem;
+    border:1px solid #4a3a1f; border-radius:20px; color:#a89876; font-size:0.62rem;
+  }
+  .toast{
+    position:fixed; bottom:1.2rem; left:50%; transform:translateX(-50%);
+    background:#1c150d; border:1px solid #55431f; border-radius:10px;
+    padding:0.7rem 1.1rem; font-size:0.8rem; color:#f0e4c4;
+    box-shadow:0 8px 24px rgba(0,0,0,0.5); opacity:0; transition:opacity 0.25s; pointer-events:none;
+  }
+  .toast.show{opacity:1;}
+
+  .herramienta-resultado{
+    margin-top:0.8rem; font-size:0.8rem; color:#a89876; text-align:center; min-height:1.1em;
+  }
+  .herramienta-resultado.ok{color:#8fce9a;}
+  .herramienta-resultado.error{color:#e0a0a0;}
+
+  /* FASE CONSUMO E — panel de Consumo (Claude / Resend) */
+  .semaforo-dot{
+    display:inline-block; width:0.65rem; height:0.65rem; border-radius:50%;
+    margin-right:0.5rem; vertical-align:middle;
+  }
+  .semaforo-verde{background:#6fbf73; box-shadow:0 0 6px rgba(111,191,115,0.6);}
+  .semaforo-amarillo{background:#e0c060; box-shadow:0 0 6px rgba(224,192,96,0.6);}
+  .semaforo-rojo{background:#e08a8a; box-shadow:0 0 6px rgba(224,138,138,0.6);}
+  .consumo-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-bottom:0.7rem;
+  }
+  .consumo-stat{
+    background:#140f09; border:1px solid #3a2e18; border-radius:8px;
+    padding:0.55rem 0.4rem; text-align:center;
+  }
+  .consumo-stat b{display:block; font-size:1.05rem; color:#f0d68a; font-family:'Cinzel', serif;}
+  .consumo-stat span{font-size:0.6rem; color:#8a7a5a; text-transform:uppercase; letter-spacing:0.03em;}
+  .barra-historial{
+    display:flex; align-items:flex-end; gap:0.3rem; height:70px; margin-top:0.7rem;
+  }
+  .barra-col{display:flex; flex-direction:column; align-items:center; flex:1; height:100%; justify-content:flex-end;}
+  .barra{
+    width:100%; background:linear-gradient(180deg,#e8c15c,#b8862f);
+    border-radius:3px 3px 0 0; min-height:2px;
+  }
+  .barra-label{font-size:0.52rem; color:#7a6c50; margin-top:0.3rem; white-space:nowrap;}
+  .config-row{
+    display:flex; align-items:center; justify-content:space-between; gap:0.6rem; margin-bottom:0.6rem;
+  }
+  .config-row label{font-size:0.75rem; color:#a89876; flex:1;}
+  .config-row input{
+    width:100px; background:#0a0705; border:1px solid #55431f; border-radius:8px;
+    padding:0.4rem 0.5rem; color:#f0e4c4; font-family:'EB Garamond', serif; font-size:0.85rem; text-align:right;
+  }
+  .config-row input:focus{outline:none; border-color:#c99a3e;}
+
+  /* ===== ADMIN v2 ===== */
+
+  /* estadísticas del panel principal, en grilla */
+  .stats-grid{
+    flex-shrink:0;
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:0.4rem;
+    margin-bottom:0.8rem;
+  }
+  .stat-box{
+    background:linear-gradient(180deg,#1c150d,#120d08); border:1px solid #4a3a1f;
+    border-radius:9px; padding:0.4rem 0.3rem; text-align:center;
+  }
+  .stat-box b{
+    display:block; font-family:'Cinzel', serif; font-size:1rem; color:#e8c15c;
+  }
+  .stat-box span{
+    display:block; font-size:0.55rem; color:#a89876; text-transform:uppercase;
+    letter-spacing:0.03em; margin-top:0.05rem; line-height:1.1;
+  }
+
+  /* tabs */
+  .tabs{
+    flex-shrink:0;
+    display:flex; gap:0.4rem; margin-bottom:1.2rem; overflow-x:auto;
+    padding-bottom:0.2rem;
+  }
+  .tab-btn{
+    flex:none; padding:0.55rem 0.9rem; border-radius:20px; border:1px solid #4a3a1f;
+    color:#a89876; font-family:'Cinzel', serif; font-size:0.66rem; letter-spacing:0.04em;
+    text-transform:uppercase; white-space:nowrap;
+  }
+  .tab-btn.active{
+    background:linear-gradient(180deg,#ffe08a,#b8862f); border-color:#e8c15c; color:#1a1206; font-weight:700;
+  }
+  .tab-badge{
+    display:inline-block; margin-left:0.3rem; background:rgba(224,138,138,0.2);
+    border:1px solid #6b3a3a; color:#e0a0a0; border-radius:8px; padding:0.05rem 0.4rem; font-size:0.6rem;
+  }
+  /* cada panel es su propia columna flex: lo de arriba (barra de buscar, botón
+     actualizar, etc.) queda fijo, y solo .scroll-area de adentro se scrollea. */
+  .tab-panel{display:none;}
+  .tab-panel.active{
+    display:flex; flex-direction:column; flex:1; min-height:0;
+  }
+  .scroll-area{
+    flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
+    padding-bottom:2.5rem;
+  }
+
+  /* badges de prioridad de alertas */
+  .prioridad{
+    display:inline-block; font-family:'Cinzel', serif; font-size:0.6rem; letter-spacing:0.04em;
+    text-transform:uppercase; border-radius:6px; padding:0.2rem 0.5rem; margin-bottom:0.5rem;
+  }
+  .prioridad.alta{background:rgba(224,138,138,0.18); border:1px solid #6b3a3a; color:#e0a0a0;}
+  .prioridad.media{background:rgba(224,168,107,0.18); border:1px solid #6b4a1f; color:#e0a86b;}
+  .prioridad.baja{background:rgba(140,150,120,0.15); border:1px solid #3f4a3a; color:#a9b89a;}
+
+  /* tres botones de moderación (eliminar / banear / eliminar+banear) */
+  .mod-actions{display:flex; gap:0.5rem; margin-top:0.7rem; flex-wrap:wrap;}
+  .btn-mini{
+    flex:1; min-width:88px; padding:0.55rem 0.4rem; border-radius:9px; font-size:0.62rem;
+    text-align:center;
+  }
+  .btn-mini.eliminar{background:rgba(139,58,58,0.12); border:1px solid #6b3a3a; color:#e0a0a0;}
+  .btn-mini.banear{background:rgba(139,90,30,0.15); border:1px solid #6b4a1f; color:#e0a86b;}
+  .btn-mini.combo{background:rgba(139,58,58,0.22); border:1px solid #8a4a4a; color:#f0b8b8; font-weight:700;}
+  .btn-mini.descartar{background:none; border:1px solid #3a3020; color:#7a6c50;}
+  .btn-mini.estilos{background:rgba(140,150,120,0.12); border:1px solid #3f4a3a; color:#a9b89a;}
+  .btn-mini:disabled{opacity:0.4; pointer-events:none;}
+
+  /* buscador */
+  .search-row{
+    flex-shrink:0;
+    display:flex; gap:0.5rem; margin-bottom:1.2rem;
+  }
+  .search-row input[type=text], .search-row input[type=email]{
+    flex:1; background:#0a0705; border:1px solid #55431f; border-radius:10px;
+    padding:0.7rem 0.9rem; color:#f0e4c4; font-family:'EB Garamond', serif; font-size:0.95rem;
+  }
+  .search-row input[type=text]:focus, .search-row input[type=email]:focus{outline:none; border-color:#c99a3e;}
+  .search-row button{
+    padding:0 1.1rem; border-radius:10px; border:1px solid #e8c15c;
+    background:linear-gradient(180deg,#ffe08a,#b8862f); color:#1a1206; font-size:0.68rem; font-weight:700;
+  }
+  .result-group-title{
+    font-family:'Cinzel', serif; font-size:0.68rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:#8a7a5a; margin:1.2rem 0 0.6rem;
+  }
+
+  /* tarjetas de usuario */
+  .user-card{
+    background:linear-gradient(180deg,#1c150d,#120d08); border:1px solid #4a3a1f;
+    border-radius:14px; padding:0.9rem 1rem; margin-bottom:0.8rem; cursor:pointer;
+  }
+  .user-card-top{display:flex; justify-content:space-between; align-items:baseline;}
+  .user-alias{font-family:'Cinzel', serif; font-size:1rem; color:#f5dd96;}
+  .user-estado{
+    font-size:0.6rem; text-transform:uppercase; letter-spacing:0.04em; border-radius:6px;
+    padding:0.15rem 0.45rem; font-family:'Cinzel', serif;
+  }
+  .user-estado.activo{background:rgba(140,150,120,0.15); border:1px solid #3f4a3a; color:#a9b89a;}
+  .user-estado.advertido{background:rgba(224,168,107,0.18); border:1px solid #6b4a1f; color:#e0a86b;}
+  .user-estado.baneado{background:rgba(224,138,138,0.18); border:1px solid #6b3a3a; color:#e0a0a0;}
+  .user-meta{font-size:0.72rem; color:#8a7a5a; margin-top:0.4rem; line-height:1.5;}
+
+  /* panel de detalle de usuario / historial de infracciones */
+  .detalle-panel{
+    background:#0a0705; border:1px solid #4a3a1f; border-radius:12px; padding:0.9rem;
+    margin-top:0.6rem;
+  }
+  .infra-item{
+    border-top:1px solid #2a2114; padding:0.6rem 0; font-size:0.78rem; color:#c9b98f;
+  }
+  .infra-item:first-child{border-top:none;}
+  .infra-tipo{
+    font-family:'Cinzel', serif; font-size:0.62rem; text-transform:uppercase; color:#e0a86b;
+    letter-spacing:0.04em; margin-bottom:0.15rem; display:block;
+  }
+  .infra-fecha{color:#7a6c50; font-size:0.68rem;}
+  .modal-overlay{
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:50;
+    align-items:center; justify-content:center; padding:1.2rem;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal-box{
+    width:100%; max-width:380px; background:linear-gradient(180deg,#241b12,#140f09);
+    border:1px solid #55431f; border-radius:14px; padding:1.3rem;
+  }
+  .modal-box h3{font-family:'Cinzel', serif; font-size:0.95rem; color:#f0d68a; margin:0 0 0.9rem;}
+  .modal-box textarea{
+    width:100%; background:#0a0705; border:1px solid #55431f; border-radius:10px;
+    padding:0.7rem; color:#f0e4c4; font-family:'EB Garamond', serif; font-size:0.9rem;
+    min-height:70px; resize:vertical;
+  }
+  .modal-actions{display:flex; gap:0.6rem; margin-top:0.9rem;}
+  .modal-actions button{flex:1; padding:0.65rem; border-radius:9px; font-size:0.68rem;}
+  .modal-cancelar{border:1px solid #4a3a1f; color:#a89876;}
+  .modal-confirmar{background:linear-gradient(180deg,#e08a8a,#8a3a3a); border:1px solid #a85a5a; color:#1a0906; font-weight:700;}
+
+  /* checklist de estilos, dentro del modal de "Editar estilos" */
+  .estilos-checklist{max-height:50vh; overflow-y:auto;}
+  .estilos-categoria-titulo{
+    font-family:'Cinzel', serif; font-size:0.6rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:#7a6c50; margin:0.8rem 0 0.3rem;
+  }
+  .estilos-categoria-titulo:first-child{margin-top:0;}
+  .estilo-check-row{
+    display:flex; align-items:center; gap:0.6rem; padding:0.4rem 0.1rem; cursor:pointer;
+  }
+  .estilo-check-row input[type=checkbox]{
+    width:1.1rem; height:1.1rem; accent-color:#c99a3e; flex-shrink:0;
+  }
+  .estilo-check-row span{font-size:0.88rem; color:#f0e4c4;}
+  .modal-confirmar.guardar{background:linear-gradient(180deg,#ffe08a,#b8862f); border:1px solid #e8c15c; color:#1a1206;}
+</style>
+</head>
+<body>
+
+  <h1>Panel Apócrifo</h1>
+  <div class="sub">Moderación de la Comunidad Apócrifa</div>
+
+  <div class="gate" id="gate">
+    <label>Clave de administrador</label>
+    <input type="password" id="claveInput" placeholder="••••••••" autocomplete="off" />
+    <button class="btn-primary" id="entrarBtn">Entrar</button>
+    <div class="gate-error" id="gateError">Clave incorrecta.</div>
+  </div>
+
+  <div id="app">
+
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-box"><b id="statUsuarios">—</b><span>Usuarios reg.</span></div>
+      <div class="stat-box"><b id="statActivos">—</b><span>Activos</span></div>
+      <div class="stat-box"><b id="statPublicaciones">—</b><span>Publicaciones</span></div>
+      <div class="stat-box"><b id="statComentarios">—</b><span>Votos</span></div>
+      <div class="stat-box"><b id="statAlertas">—</b><span>Alertas</span></div>
+      <div class="stat-box"><b id="statBaneados">—</b><span>Baneados</span></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="pendientes">Pendientes</button>
+      <button class="tab-btn" data-tab="alertas">Alertas<span class="tab-badge" id="badgeAlertas" style="display:none;">0</span></button>
+      <button class="tab-btn" data-tab="buscador">Buscador</button>
+      <button class="tab-btn" data-tab="usuarios">Usuarios</button>
+      <button class="tab-btn" data-tab="baneados">Baneados</button>
+      <button class="tab-btn" data-tab="herramientas">Herramientas</button>
+      <button class="tab-btn" data-tab="consumo">Consumo</button>
+    </div>
+
+    <!-- PENDIENTES (ya existente) -->
+    <div class="tab-panel active" id="panel-pendientes">
+      <div class="stats-bar">
+        <div><b id="statPendientes">—</b>pendientes</div>
+        <div><b id="statDuplicados">—</b>posibles dup.</div>
+      </div>
+      <button class="refresh-btn" id="refreshBtn">↻ actualizar</button>
+      <div class="scroll-area"><div id="lista"></div></div>
+    </div>
+
+    <!-- ALERTAS DE MODERACIÓN -->
+    <div class="tab-panel" id="panel-alertas">
+      <button class="refresh-btn" id="refreshAlertasBtn">↻ actualizar</button>
+      <div class="scroll-area"><div id="listaAlertas"></div></div>
+    </div>
+
+    <!-- BUSCADOR DE MODERACIÓN -->
+    <div class="tab-panel" id="panel-buscador">
+      <div class="search-row">
+        <input type="text" id="buscadorInput" placeholder="Usuario, @alias o palabra/frase..." autocomplete="off" />
+        <button id="buscarBtn">Buscar</button>
+      </div>
+      <div class="scroll-area"><div id="resultadosBuscador"></div></div>
+    </div>
+
+    <!-- USUARIOS -->
+    <div class="tab-panel" id="panel-usuarios">
+      <div class="search-row">
+        <input type="text" id="usuariosInput" placeholder="Filtrar por alias, ID o email..." autocomplete="off" />
+        <button id="usuariosBuscarBtn">Buscar</button>
+      </div>
+      <div class="search-row" style="margin-top:0.5rem;">
+        <input type="email" id="banearEmailInput" placeholder="Banear directo por email..." autocomplete="off" />
+        <button id="banearEmailBtn">🚫 Banear</button>
+      </div>
+      <div class="scroll-area">
+        <div id="detalleUsuario"></div>
+        <div id="listaUsuarios"></div>
+      </div>
+    </div>
+
+    <!-- BANEADOS -->
+    <div class="tab-panel" id="panel-baneados">
+      <button class="refresh-btn" id="refreshBaneadosBtn">↻ actualizar</button>
+      <div class="scroll-area"><div id="listaBaneados"></div></div>
+    </div>
+
+    <!-- HERRAMIENTAS -->
+    <div class="tab-panel" id="panel-herramientas">
+      <div class="scroll-area">
+        <div class="card">
+          <div class="card-top">
+            <div class="card-palabra">Reclasificar estilos</div>
+          </div>
+          <div class="card-significado">
+            Recalcula el estilo (Gauchas, Lunfardo, Apócrifas, etc.) de <b>todas</b> las palabras
+            usando la clasificación automática actual. Usalo si ves alguna palabra en una categoría
+            que no le corresponde — suele pasar con palabras viejas que quedaron con una etiqueta
+            desactualizada.
+          </div>
+          <button class="btn-primary" id="reclasificarBtn">🔄 Reclasificar todas las palabras</button>
+          <div id="reclasificarResultado" class="herramienta-resultado"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FASE CONSUMO E — CONSUMO (Claude / Resend) -->
+    <div class="tab-panel" id="panel-consumo">
+      <button class="refresh-btn" id="refreshConsumoBtn">↻ actualizar</button>
+      <div class="scroll-area"><div id="consumoContenido"></div></div>
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- modal para pedir motivo antes de eliminar / banear -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box">
+      <h3 id="modalTitulo">Confirmar acción</h3>
+      <textarea id="modalMotivo" placeholder="Motivo (opcional, queda guardado en el historial)"></textarea>
+      <div class="modal-actions">
+        <button class="modal-cancelar" id="modalCancelar">Cancelar</button>
+        <button class="modal-confirmar" id="modalConfirmar">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal de edición manual de estilos de una palabra (Fase 10.2) -->
+  <div class="modal-overlay" id="estilosModalOverlay">
+    <div class="modal-box">
+      <h3 id="estilosModalTitulo">Editar estilos</h3>
+      <div class="estilos-checklist" id="estilosModalLista"></div>
+      <div class="modal-actions">
+        <button class="modal-cancelar" id="estilosModalCancelar">Cancelar</button>
+        <button class="modal-confirmar guardar" id="estilosModalGuardar">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const API_BASE = ''; // mismo origen que el worker
+
+  const gate = document.getElementById('gate');
+  const app = document.getElementById('app');
+  const claveInput = document.getElementById('claveInput');
+  const entrarBtn = document.getElementById('entrarBtn');
+  const gateError = document.getElementById('gateError');
+  const lista = document.getElementById('lista');
+  const toast = document.getElementById('toast');
+
+  let ADMIN_KEY = sessionStorage.getItem('apocrifo_admin_key') || '';
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str || '';
+    return d.innerHTML;
+  }
+
+  function fechaLegible(iso){
+    if(!iso) return '—';
+    const f = new Date(iso);
+    return f.toLocaleDateString('es-AR') + ' ' + f.toLocaleTimeString('es-AR', {hour:'2-digit', minute:'2-digit'});
+  }
+
+  async function apiGet(path){
+    const res = await fetch(`${API_BASE}${path}`, { headers: { 'X-Admin-Key': ADMIN_KEY } });
+    if(res.status === 401) throw new Error('No autorizado');
+    return res.json();
+  }
+
+  async function apiPost(path, body){
+    const res = await fetch(`${API_BASE}${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+      body: JSON.stringify(body)
+    });
+    return res.json();
+  }
+
+  async function intentarEntrar(){
+    const clave = claveInput.value.trim();
+    if(!clave) return;
+    entrarBtn.textContent = 'Verificando...';
+    ADMIN_KEY = clave;
+    const ok = await cargarPendientes(clave);
+    entrarBtn.textContent = 'Entrar';
+    if(ok){
+      sessionStorage.setItem('apocrifo_admin_key', clave);
+      gate.style.display = 'none';
+      app.style.display = 'flex';
+      cargarStats();
+      cargarBadgeAlertas();
+    } else {
+      gateError.style.display = 'block';
+    }
+  }
+
+  entrarBtn.addEventListener('click', intentarEntrar);
+  claveInput.addEventListener('keydown', e => { if(e.key === 'Enter') intentarEntrar(); });
+
+  // ===================== PANEL PRINCIPAL — ESTADÍSTICAS =====================
+
+  async function cargarStats(){
+    try{
+      const data = await apiGet('/api/comunidad/admin/stats');
+      document.getElementById('statUsuarios').textContent = data.usuarios_registrados ?? '—';
+      document.getElementById('statActivos').textContent = data.usuarios_activos ?? '—';
+      document.getElementById('statPublicaciones').textContent = data.publicaciones ?? '—';
+      document.getElementById('statComentarios').textContent = data.comentarios ?? '—';
+      document.getElementById('statAlertas').textContent = data.alertas_pendientes ?? '—';
+      document.getElementById('statBaneados').textContent = data.usuarios_baneados ?? '—';
+    }catch(err){ /* silencioso, no bloquea el resto del panel */ }
+  }
+
+  async function cargarBadgeAlertas(){
+    try{
+      const data = await apiGet('/api/comunidad/admin/alertas');
+      const n = (data.alertas || []).length;
+      const badge = document.getElementById('badgeAlertas');
+      if(n > 0){ badge.textContent = n; badge.style.display = 'inline-block'; }
+      else { badge.style.display = 'none'; }
+    }catch(err){}
+  }
+
+  // ===================== TABS =====================
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      if(btn.dataset.tab === 'alertas') cargarAlertas();
+      if(btn.dataset.tab === 'usuarios') cargarUsuarios();
+      if(btn.dataset.tab === 'baneados') cargarBaneados();
+      if(btn.dataset.tab === 'consumo') cargarConsumo();
+    });
+  });
+
+  // ===================== HERRAMIENTAS =====================
+
+  const reclasificarBtn = document.getElementById('reclasificarBtn');
+  const reclasificarResultado = document.getElementById('reclasificarResultado');
+
+  reclasificarBtn.addEventListener('click', async () => {
+    reclasificarBtn.disabled = true;
+    reclasificarBtn.textContent = 'Reclasificando...';
+    reclasificarResultado.textContent = '';
+    reclasificarResultado.className = 'herramienta-resultado';
+    try{
+      const data = await apiPost('/api/comunidad/admin/reclasificar-estilos', {});
+      if(data.ok){
+        reclasificarResultado.textContent = `Listo — ${data.palabras_reclasificadas} palabras reclasificadas.`;
+        reclasificarResultado.className = 'herramienta-resultado ok';
+        showToast('Reclasificación completa ✓');
+      } else {
+        reclasificarResultado.textContent = 'Error: ' + (data.error || 'no se pudo reclasificar');
+        reclasificarResultado.className = 'herramienta-resultado error';
+      }
+    }catch(err){
+      reclasificarResultado.textContent = 'Error de conexión.';
+      reclasificarResultado.className = 'herramienta-resultado error';
+    }
+    reclasificarBtn.disabled = false;
+    reclasificarBtn.textContent = '🔄 Reclasificar todas las palabras';
+  });
+
+  // ===================== PENDIENTES (ya existente) =====================
+
+  async function cargarPendientes(claveTemporal){
+    const clave = claveTemporal || ADMIN_KEY;
+    try{
+      const res = await fetch(`${API_BASE}/api/comunidad/pendientes`, {
+        headers: { 'X-Admin-Key': clave }
+      });
+      if(res.status === 401){ return false; }
+      const data = await res.json();
+      renderLista(data.pendientes || []);
+      return true;
+    }catch(err){
+      showToast('Error al cargar pendientes.');
+      return false;
+    }
+  }
+
+  function renderLista(pendientes){
+    document.getElementById('statPendientes').textContent =
+      pendientes.filter(p => p.estado === 'pendiente').length;
+    document.getElementById('statDuplicados').textContent =
+      pendientes.filter(p => p.estado === 'posible_duplicado').length;
+
+    if(pendientes.length === 0){
+      lista.innerHTML = '<div class="empty">No hay aportes esperando revisión. 🖤</div>';
+      return;
+    }
+
+    lista.innerHTML = pendientes.map(p => {
+      const fecha = p.fecha_creacion ? new Date(p.fecha_creacion).toLocaleDateString('es-AR') : '';
+      const esDup = p.estado === 'posible_duplicado';
+      return `
+        <div class="card ${esDup ? 'dup' : ''}" data-id="${p.id}">
+          ${esDup ? `<div class="dup-flag">⚠ posible duplicado de "${escapeHtml(p.duplicado_de_palabra || '?')}"</div>` : ''}
+          <div class="card-top">
+            <div class="card-palabra">${escapeHtml(p.palabra)}</div>
+            <div class="card-fecha">${fecha}</div>
+          </div>
+          <div class="card-significado">${escapeHtml(p.significado)}</div>
+          <div class="card-meta">por: ${escapeHtml(p.autor_id || 'anónimo')}</div>
+          <div class="card-actions">
+            <button class="btn-aprobar" onclick="moderar(${p.id}, 'aprobar', this)">Aprobar</button>
+            <button class="btn-rechazar" onclick="moderar(${p.id}, 'rechazar', this)">Rechazar</button>
+          </div>
+          <div class="mod-actions">
+            <button class="btn-mini banear" onclick="abrirModalBaneoAutor('${escapeHtml(p.usuario_id || p.autor_id || '')}', this)">🚫 Banear autor</button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  async function moderar(id, accion, btnEl){
+    const card = btnEl.closest('.card');
+    card.querySelectorAll('button').forEach(b => b.disabled = true);
+    try{
+      const res = await fetch(`${API_BASE}/api/comunidad/moderar`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+        body: JSON.stringify({ id, accion })
+      });
+      const data = await res.json();
+      if(data.ok){
+        showToast(accion === 'aprobar' ? 'Aporte aprobado ✓' : 'Aporte rechazado');
+        card.remove();
+        cargarPendientes();
+        cargarStats();
+      } else {
+        showToast('Error: ' + (data.error || 'no se pudo moderar'));
+        card.querySelectorAll('button').forEach(b => b.disabled = false);
+      }
+    }catch(err){
+      showToast('Error de conexión.');
+      card.querySelectorAll('button').forEach(b => b.disabled = false);
+    }
+  }
+
+  document.getElementById('refreshBtn').addEventListener('click', () => cargarPendientes());
+  window.moderar = moderar;
+
+  // ===================== MODAL DE CONFIRMACIÓN (motivo) =====================
+
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalTitulo = document.getElementById('modalTitulo');
+  const modalMotivo = document.getElementById('modalMotivo');
+  let modalCallback = null;
+
+  function abrirModal(titulo, callback){
+    modalTitulo.textContent = titulo;
+    modalMotivo.value = '';
+    modalCallback = callback;
+    modalOverlay.classList.add('show');
+  }
+
+  document.getElementById('modalCancelar').addEventListener('click', () => {
+    modalOverlay.classList.remove('show');
+    modalCallback = null;
+  });
+
+  document.getElementById('modalConfirmar').addEventListener('click', async () => {
+    if(modalCallback) await modalCallback(modalMotivo.value.trim());
+    modalOverlay.classList.remove('show');
+    modalCallback = null;
+  });
+
+  function abrirModalBaneoAutor(usuarioId, btnEl){
+    if(!usuarioId){ showToast('Este aporte no tiene un usuario identificable.'); return; }
+    abrirModal('Banear a "' + usuarioId + '"', async (motivo) => {
+      const data = await apiPost('/api/comunidad/admin/banear-usuario', { usuario_id: usuarioId, motivo });
+      if(data.ok){ showToast('Usuario baneado 🚫'); cargarStats(); }
+      else showToast('Error: ' + (data.error || 'no se pudo banear'));
+    });
+  }
+  window.abrirModalBaneoAutor = abrirModalBaneoAutor;
+
+  // acciones genéricas de moderación (eliminar / banear / eliminar+banear)
+  // sobre un aporte, usadas desde Alertas y desde el Buscador.
+  function accionEliminar(wordId, usuarioId, onDone){
+    abrirModal('Eliminar publicación', async (motivo) => {
+      const data = await apiPost('/api/comunidad/admin/eliminar-palabra', { id: wordId, motivo });
+      if(data.ok){ showToast('Publicación eliminada 🗑️'); cargarStats(); if(onDone) onDone(); }
+      else showToast('Error: ' + (data.error || 'no se pudo eliminar'));
+    });
+  }
+
+  function accionBanear(usuarioId, onDone){
+    if(!usuarioId){ showToast('No hay un usuario identificable en este contenido.'); return; }
+    abrirModal('Banear a "' + usuarioId + '"', async (motivo) => {
+      const data = await apiPost('/api/comunidad/admin/banear-usuario', { usuario_id: usuarioId, motivo });
+      if(data.ok){ showToast('Usuario baneado 🚫'); cargarStats(); if(onDone) onDone(); }
+      else showToast('Error: ' + (data.error || 'no se pudo banear'));
+    });
+  }
+
+  function accionEliminarYBanear(wordId, usuarioId, onDone){
+    abrirModal('Eliminar y banear', async (motivo) => {
+      const data = await apiPost('/api/comunidad/admin/eliminar-y-banear', { id: wordId, motivo });
+      if(data.ok){ showToast('Eliminado y usuario baneado 🗑️🚫'); cargarStats(); if(onDone) onDone(); }
+      else showToast('Error: ' + (data.error || 'no se pudo completar'));
+    });
+  }
+  window.accionEliminar = accionEliminar;
+  window.accionBanear = accionBanear;
+  window.accionEliminarYBanear = accionEliminarYBanear;
+
+  // ===================== ESTILOS (edición manual, Fase 10.2) =====================
+
+  const estilosModalOverlay = document.getElementById('estilosModalOverlay');
+  const estilosModalTitulo = document.getElementById('estilosModalTitulo');
+  const estilosModalLista = document.getElementById('estilosModalLista');
+  let ESTILOS_CACHE = null;
+  let estilosModalWordId = null;
+
+  async function cargarEstilosDisponibles(){
+    if(ESTILOS_CACHE) return ESTILOS_CACHE;
+    const res = await fetch(`${API_BASE}/api/comunidad/estilos`);
+    const data = await res.json();
+    ESTILOS_CACHE = data.estilos || [];
+    return ESTILOS_CACHE;
+  }
+
+  async function abrirModalEstilos(wordId, palabra, estilosActualesStr){
+    estilosModalWordId = wordId;
+    estilosModalTitulo.textContent = 'Estilos de "' + palabra + '"';
+    estilosModalLista.innerHTML = '<div class="empty">Cargando...</div>';
+    estilosModalOverlay.classList.add('show');
+
+    const actuales = new Set(
+      (estilosActualesStr || '').split(',').filter(Boolean).map(Number)
+    );
+
+    try{
+      const estilos = await cargarEstilosDisponibles();
+      let categoriaAnterior = null;
+      let html = '';
+      for(const e of estilos){
+        if(e.categoria_padre !== categoriaAnterior){
+          html += `<div class="estilos-categoria-titulo">${escapeHtml(e.categoria_padre)}</div>`;
+          categoriaAnterior = e.categoria_padre;
+        }
+        const marcado = actuales.has(e.id) ? 'checked' : '';
+        html += `
+          <label class="estilo-check-row">
+            <input type="checkbox" value="${e.id}" ${marcado} />
+            <span>${escapeHtml(e.nombre)}</span>
+          </label>`;
+      }
+      estilosModalLista.innerHTML = html || '<div class="empty">No hay estilos cargados.</div>';
+    }catch(err){
+      estilosModalLista.innerHTML = '<div class="empty">Error al cargar los estilos.</div>';
+    }
+  }
+  window.abrirModalEstilos = abrirModalEstilos;
+
+  document.getElementById('estilosModalCancelar').addEventListener('click', () => {
+    estilosModalOverlay.classList.remove('show');
+    estilosModalWordId = null;
+  });
+
+  document.getElementById('estilosModalGuardar').addEventListener('click', async () => {
+    if(estilosModalWordId === null) return;
+    const seleccionados = Array.from(
+      estilosModalLista.querySelectorAll('input[type=checkbox]:checked')
+    ).map(cb => Number(cb.value));
+
+    try{
+      const data = await apiPost('/api/comunidad/admin/asignar-estilos', {
+        id: estilosModalWordId,
+        estilos: seleccionados
+      });
+      if(data.ok){
+        showToast('Estilos actualizados ✓');
+      } else {
+        showToast('Error: ' + (data.error || 'no se pudo guardar'));
+      }
+    }catch(err){
+      showToast('Error de conexión.');
+    }
+    estilosModalOverlay.classList.remove('show');
+    estilosModalWordId = null;
+  });
+
+  // ===================== ALERTAS DE MODERACIÓN =====================
+
+  const listaAlertas = document.getElementById('listaAlertas');
+
+  async function cargarAlertas(){
+    listaAlertas.innerHTML = '<div class="empty">Cargando...</div>';
+    try{
+      const data = await apiGet('/api/comunidad/admin/alertas');
+      renderAlertas(data.alertas || []);
+      cargarBadgeAlertas();
+    }catch(err){
+      listaAlertas.innerHTML = '<div class="empty">Error al cargar alertas.</div>';
+    }
+  }
+
+  const TIPO_ALERTA_LABEL = {
+    aporte_pendiente: 'Aporte ambiguo (revisión manual)',
+    aporte_rechazado: 'Aporte rechazado automáticamente',
+    alias_rechazado: 'Nombre de usuario rechazado',
+    reincidencia: 'Usuario con infracciones reiteradas',
+    denuncia_comunidad: '🚩 Transgresión notificada por la comunidad'
+  };
+
+  function renderAlertas(alertas){
+    if(alertas.length === 0){
+      listaAlertas.innerHTML = '<div class="empty">No hay alertas pendientes de revisión. 🖤</div>';
+      return;
+    }
+    listaAlertas.innerHTML = alertas.map(a => `
+      <div class="card" data-alerta-id="${a.id}">
+        <div class="prioridad ${a.prioridad || 'media'}">${(a.prioridad || 'media').toUpperCase()}</div>
+        <div class="card-top">
+          <div class="card-palabra" style="font-size:0.9rem;">${escapeHtml(TIPO_ALERTA_LABEL[a.tipo] || a.tipo)}</div>
+          <div class="card-fecha">${fechaLegible(a.fecha)}</div>
+        </div>
+        <div class="card-significado">${escapeHtml(a.contenido || '—')}</div>
+        <div class="card-meta">
+          usuario: ${escapeHtml(a.usuario_id || 'anónimo')}<br/>
+          motivo: ${escapeHtml(a.motivo || '—')}
+        </div>
+        <div class="mod-actions">
+          <button class="btn-mini eliminar" ${a.word_id ? '' : 'disabled'} onclick="resolverAlerta(${a.id}, 'eliminar', this)">🗑️ Eliminar</button>
+          <button class="btn-mini banear" onclick="resolverAlerta(${a.id}, 'banear', this)">🚫 Banear</button>
+          <button class="btn-mini combo" ${a.word_id ? '' : 'disabled'} onclick="resolverAlerta(${a.id}, 'eliminar_banear', this)">🗑️🚫 Ambas</button>
+        </div>
+        <div class="mod-actions">
+          <button class="btn-mini descartar" onclick="resolverAlerta(${a.id}, 'descartar', this)">Descartar (sin acción)</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function resolverAlerta(id, accion, btnEl){
+    const card = btnEl.closest('.card');
+    const ejecutar = async (motivo) => {
+      card.querySelectorAll('button').forEach(b => b.disabled = true);
+      const data = await apiPost('/api/comunidad/admin/resolver-alerta', { id, accion, motivo });
+      if(data.ok){
+        showToast('Alerta resuelta ✓');
+        card.remove();
+        cargarStats();
+        cargarBadgeAlertas();
+      } else {
+        showToast('Error: ' + (data.error || 'no se pudo resolver'));
+        card.querySelectorAll('button').forEach(b => b.disabled = false);
+      }
+    };
+    if(accion === 'descartar'){ ejecutar(''); return; }
+    const titulos = { eliminar: 'Eliminar publicación', banear: 'Banear usuario', eliminar_banear: 'Eliminar y banear' };
+    abrirModal(titulos[accion] || 'Confirmar acción', ejecutar);
+  }
+  window.resolverAlerta = resolverAlerta;
+
+  document.getElementById('refreshAlertasBtn').addEventListener('click', cargarAlertas);
+
+  // ===================== BUSCADOR DE MODERACIÓN =====================
+
+  const resultadosBuscador = document.getElementById('resultadosBuscador');
+
+  async function buscarModeracion(){
+    const q = document.getElementById('buscadorInput').value.trim();
+    if(!q){ resultadosBuscador.innerHTML = ''; return; }
+    resultadosBuscador.innerHTML = '<div class="empty">Buscando...</div>';
+    try{
+      const data = await apiGet('/api/comunidad/admin/buscar?q=' + encodeURIComponent(q));
+      renderResultadosBuscador(data.palabras || [], data.alias || []);
+    }catch(err){
+      resultadosBuscador.innerHTML = '<div class="empty">Error al buscar.</div>';
+    }
+  }
+
+  function renderResultadosBuscador(palabras, alias){
+    if(palabras.length === 0 && alias.length === 0){
+      resultadosBuscador.innerHTML = '<div class="empty">Sin coincidencias.</div>';
+      return;
+    }
+
+    let html = '';
+
+    if(palabras.length > 0){
+      html += '<div class="result-group-title">Publicaciones (' + palabras.length + ')</div>';
+      html += palabras.map(p => `
+        <div class="card" data-id="${p.id}">
+          <div class="card-top">
+            <div class="card-palabra">${escapeHtml(p.palabra)}</div>
+            <div class="card-fecha">${fechaLegible(p.fecha_creacion)}</div>
+          </div>
+          <div class="card-significado">${escapeHtml(p.significado)}</div>
+          <div class="card-meta">
+            por: ${escapeHtml(p.autor_id || 'anónimo')} · usuario_id: ${escapeHtml(p.usuario_id || '—')}<br/>
+            estado: ${escapeHtml(p.estado)}
+          </div>
+          <div class="mod-actions">
+            <button class="btn-mini eliminar" onclick="accionEliminar(${p.id}, '${escapeHtml(p.usuario_id || '')}', () => this.closest('.card').remove())">🗑️ Eliminar</button>
+            <button class="btn-mini banear" onclick="accionBanear('${escapeHtml(p.usuario_id || p.autor_id || '')}')">🚫 Banear</button>
+            <button class="btn-mini combo" onclick="accionEliminarYBanear(${p.id}, '${escapeHtml(p.usuario_id || '')}', () => this.closest('.card').remove())">🗑️🚫 Ambas</button>
+            <button class="btn-mini estilos" onclick="abrirModalEstilos(${p.id}, '${escapeHtml(p.palabra)}', '${p.estilos_ids || ''}')">🏷️ Estilos</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    if(alias.length > 0){
+      html += '<div class="result-group-title">Alias / nombres de usuario (' + alias.length + ')</div>';
+      html += alias.map(a => `
+        <div class="card">
+          <div class="card-top">
+            <div class="card-palabra">@${escapeHtml(a.alias_texto)}</div>
+            <div class="card-fecha">${fechaLegible(a.fecha)}</div>
+          </div>
+          <div class="card-meta">usuario_id: ${escapeHtml(a.usuario_id)}</div>
+          <div class="mod-actions">
+            <button class="btn-mini banear" onclick="accionBanear('${escapeHtml(a.usuario_id)}')">🚫 Banear</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    resultadosBuscador.innerHTML = html;
+  }
+
+  document.getElementById('buscarBtn').addEventListener('click', buscarModeracion);
+  document.getElementById('buscadorInput').addEventListener('keydown', e => { if(e.key === 'Enter') buscarModeracion(); });
+
+  // ===================== USUARIOS =====================
+
+  const listaUsuarios = document.getElementById('listaUsuarios');
+  const detalleUsuario = document.getElementById('detalleUsuario');
+
+  async function cargarUsuarios(){
+    const q = document.getElementById('usuariosInput').value.trim();
+    listaUsuarios.innerHTML = '<div class="empty">Cargando...</div>';
+    detalleUsuario.innerHTML = '';
+    try{
+      const data = await apiGet('/api/comunidad/admin/usuarios' + (q ? ('?q=' + encodeURIComponent(q)) : ''));
+      renderUsuarios(data.usuarios || []);
+    }catch(err){
+      listaUsuarios.innerHTML = '<div class="empty">Error al cargar usuarios.</div>';
+    }
+  }
+
+  function estadoUsuario(u){
+    if(u.baneado > 0) return { clase: 'baneado', label: 'BANEADO' };
+    if(u.infracciones > 0) return { clase: 'advertido', label: 'ADVERTIDO' };
+    return { clase: 'activo', label: 'ACTIVO' };
+  }
+
+  function renderUsuarios(usuarios){
+    if(usuarios.length === 0){
+      listaUsuarios.innerHTML = '<div class="empty">No se encontraron usuarios.</div>';
+      return;
+    }
+    listaUsuarios.innerHTML = usuarios.map(u => {
+      const est = estadoUsuario(u);
+      return `
+        <div class="user-card" onclick="verUsuario('${escapeHtml(u.usuario_id)}')">
+          <div class="user-card-top">
+            <div class="user-alias">@${escapeHtml(u.alias || u.usuario_id)}</div>
+            <div class="user-estado ${est.clase}">${est.label}</div>
+          </div>
+          <div class="user-meta">
+            registrado: ${fechaLegible(u.fecha_registro)}<br/>
+            última actividad: ${fechaLegible(u.ultima_actividad)}<br/>
+            ${u.email ? `email: ${escapeHtml(u.email)}<br/>` : ''}
+            aportes: ${u.aportes} · infracciones: ${u.infracciones}
+          </div>
+          ${u.baneado > 0 ? '' : `
+          <div class="mod-actions" onclick="event.stopPropagation()">
+            <button class="btn-mini banear" onclick="accionBanear('${escapeHtml(u.usuario_id)}', () => cargarUsuarios())">🚫 Banear</button>
+          </div>`}
+        </div>`;
+    }).join('');
+  }
+
+  async function verUsuario(usuarioId){
+    detalleUsuario.innerHTML = '<div class="empty">Cargando...</div>';
+    detalleUsuario.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    try{
+      const u = await apiGet('/api/comunidad/admin/usuario?usuario_id=' + encodeURIComponent(usuarioId));
+      const infraccionesHtml = (u.infracciones || []).length > 0
+        ? u.infracciones.map(i => `
+            <div class="infra-item">
+              <span class="infra-tipo">${escapeHtml(i.tipo)}</span>
+              ${escapeHtml(i.contenido || i.motivo || 'sin detalle')}
+              <div class="infra-fecha">${fechaLegible(i.fecha)}</div>
+            </div>`).join('')
+        : '<div class="empty" style="padding:1rem;">Sin infracciones registradas.</div>';
+
+      const ipsHtml = (u.ips || []).length > 0
+        ? u.ips.map(i => `${escapeHtml(i.ip)} ${i.baneada ? '🚫 (baneada)' : ''}`).join('<br/>')
+        : 'sin IPs registradas';
+
+      detalleUsuario.innerHTML = `
+        <div class="detalle-panel">
+          <div class="user-alias">@${escapeHtml(u.alias || u.usuario_id)}</div>
+          <div class="user-meta">
+            usuario_id: ${escapeHtml(u.usuario_id)}<br/>
+            ${u.email ? `email: ${escapeHtml(u.email)}<br/>` : ''}
+            registrado: ${fechaLegible(u.fecha_registro)}<br/>
+            ${u.baneado ? `<b style="color:#e0a0a0;">BANEADO</b> — ${escapeHtml((u.baneo && u.baneo.motivo) || 'sin motivo registrado')} (${fechaLegible(u.baneo && u.baneo.fecha)})<br/>` : ''}
+            IPs conocidas: ${ipsHtml}
+          </div>
+          ${!u.baneado ? `<div class="mod-actions"><button class="btn-mini banear" onclick="accionBanear('${escapeHtml(u.usuario_id)}', () => verUsuario('${escapeHtml(u.usuario_id)}'))">🚫 Banear a este usuario (y sus IPs)</button></div>` : ''}
+          <div class="result-group-title">Historial de infracciones</div>
+          ${infraccionesHtml}
+        </div>`;
+    }catch(err){
+      detalleUsuario.innerHTML = '<div class="empty">Error al cargar el usuario.</div>';
+    }
+  }
+  window.verUsuario = verUsuario;
+
+  document.getElementById('usuariosBuscarBtn').addEventListener('click', cargarUsuarios);
+  document.getElementById('usuariosInput').addEventListener('keydown', e => { if(e.key === 'Enter') cargarUsuarios(); });
+
+  // FASE 6 — banear directo por email, sin necesidad de encontrar antes
+  // el usuario en la lista (útil si todavía no aportó ni tiene alias).
+  document.getElementById('banearEmailBtn').addEventListener('click', () => {
+    const emailInput = document.getElementById('banearEmailInput');
+    const email = emailInput.value.trim();
+    if(!email){ showToast('Ingresá un email.'); return; }
+    abrirModal('Banear a "' + email + '"', async (motivo) => {
+      const data = await apiPost('/api/comunidad/admin/banear-usuario', { email, motivo });
+      if(data.ok){
+        showToast('Usuario baneado 🚫');
+        emailInput.value = '';
+        cargarStats();
+        cargarUsuarios();
+      } else {
+        showToast('Error: ' + (data.error || 'no se pudo banear'));
+      }
+    });
+  });
+
+  // ===================== BANEADOS =====================
+
+  const listaBaneados = document.getElementById('listaBaneados');
+
+  async function cargarBaneados(){
+    listaBaneados.innerHTML = '<div class="empty">Cargando...</div>';
+    try{
+      const data = await apiGet('/api/comunidad/admin/baneados');
+      renderBaneados(data.baneados || []);
+      cargarStats();
+    }catch(err){
+      listaBaneados.innerHTML = '<div class="empty">Error al cargar baneados.</div>';
+    }
+  }
+
+  function renderBaneados(baneados){
+    if(baneados.length === 0){
+      listaBaneados.innerHTML = '<div class="empty">No hay usuarios baneados. 🖤</div>';
+      return;
+    }
+    listaBaneados.innerHTML = baneados.map(b => `
+      <div class="card">
+        <div class="card-top">
+          <div class="card-palabra" style="font-size:0.9rem;">@${escapeHtml(b.alias || b.usuario_id)}</div>
+          <div class="card-fecha">${fechaLegible(b.fecha)}</div>
+        </div>
+        <div class="card-meta">
+          usuario_id: ${escapeHtml(b.usuario_id)}<br/>
+          ${b.email ? `email: ${escapeHtml(b.email)}<br/>` : ''}
+          motivo: ${escapeHtml(b.motivo || 'sin motivo registrado')}<br/>
+          baneado por: ${escapeHtml(b.admin || 'admin')}
+        </div>
+        <div class="mod-actions">
+          <button class="btn-mini banear" onclick="reintegrarUsuario('${escapeHtml(b.usuario_id)}', this)">↩️ Reintegrar</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function reintegrarUsuario(usuarioId, btnEl){
+    const card = btnEl.closest('.card');
+    abrirModal('Reintegrar a "' + usuarioId + '"', async (motivo) => {
+      card.querySelectorAll('button').forEach(b => b.disabled = true);
+      const data = await apiPost('/api/comunidad/admin/desbanear', { usuario_id: usuarioId, motivo });
+      if(data.ok){
+        showToast('Usuario reintegrado ↩️');
+        card.remove();
+        cargarStats();
+        if(listaBaneados.children.length === 0){
+          listaBaneados.innerHTML = '<div class="empty">No hay usuarios baneados. 🖤</div>';
+        }
+      } else {
+        showToast('Error: ' + (data.error || 'no se pudo reintegrar'));
+        card.querySelectorAll('button').forEach(b => b.disabled = false);
+      }
+    });
+  }
+  window.reintegrarUsuario = reintegrarUsuario;
+
+  document.getElementById('refreshBaneadosBtn').addEventListener('click', cargarBaneados);
+
+  // ===================== FASE CONSUMO E — CONSUMO (Claude / Resend) =====================
+
+  function semaforoDot(color){
+    if(!color) return '';
+    return `<span class="semaforo-dot semaforo-${color}"></span>`;
+  }
+
+  function fmtNum(n){
+    if(n === null || n === undefined) return '—';
+    return Number(n).toLocaleString('es-AR');
+  }
+
+  function fmtUsd(n){
+    if(n === null || n === undefined) return '—';
+    return '$' + Number(n).toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:4});
+  }
+
+  function renderBarrasHistorial(titulo, dias, campo, formatear){
+    if(!dias.length) return '';
+    const max = Math.max(...dias.map(d => Number(d[campo]) || 0), 1);
+    return `
+      <div class="card">
+        <div class="card-top"><div class="card-palabra">${titulo}</div></div>
+        <div class="barra-historial">
+          ${dias.map(d => `
+            <div class="barra-col">
+              <div class="barra" style="height:${Math.max(3, (Number(d[campo]) / max) * 62)}px;" title="${formatear(d[campo])}"></div>
+              <div class="barra-label">${escapeHtml(String(d.periodo).slice(5))}</div>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  async function cargarConsumo(){
+    const cont = document.getElementById('consumoContenido');
+    cont.innerHTML = '<div class="empty">Cargando...</div>';
+    try{
+      const [claude, resend, configData, historial] = await Promise.all([
+        apiGet('/api/comunidad/admin/consumo/claude'),
+        apiGet('/api/comunidad/admin/consumo/resend'),
+        apiGet('/api/comunidad/admin/consumo/config'),
+        apiGet('/api/comunidad/admin/consumo/historial?periodo=dia')
+      ]);
+      const config = configData.config || {};
+
+      let html = '';
+
+      // ---- Claude ----
+      html += `
+        <div class="card">
+          <div class="card-top">
+            <div class="card-palabra">${semaforoDot(claude.semaforo && claude.semaforo.color)}Claude</div>
+            <div class="card-fecha">${claude.ultima_llamada ? fechaLegible(claude.ultima_llamada.fecha) : 'sin actividad'}</div>
+          </div>
+          <div class="consumo-grid">
+            <div class="consumo-stat"><b>${fmtNum(claude.hoy && claude.hoy.solicitudes)}</b><span>Hoy</span></div>
+            <div class="consumo-stat"><b>${fmtNum(claude.este_mes && claude.este_mes.solicitudes)}</b><span>Este mes</span></div>
+            <div class="consumo-stat"><b>${fmtNum(claude.historico && claude.historico.solicitudes)}</b><span>Histórico</span></div>
+            <div class="consumo-stat"><b>${fmtUsd(claude.este_mes && claude.este_mes.costo_estimado)}</b><span>Costo este mes</span></div>
+          </div>
+          <div class="card-meta">${
+            claude.semaforo && claude.semaforo.presupuesto_mensual_usd
+              ? `Presupuesto: ${fmtUsd(claude.semaforo.presupuesto_mensual_usd)} · ${claude.semaforo.porcentaje_usado.toFixed(1)}% usado${claude.semaforo.alerta ? ' ⚠️' : ''}`
+              : 'Sin presupuesto mensual configurado'
+          }</div>
+        </div>`;
+
+      // ---- Resend / Login ----
+      html += `
+        <div class="card">
+          <div class="card-top">
+            <div class="card-palabra">${semaforoDot(resend.semaforo && resend.semaforo.color)}Login / Resend</div>
+            <div class="card-fecha">${resend.ultimo_envio ? fechaLegible(resend.ultimo_envio.fecha) : 'sin actividad'}</div>
+          </div>
+          <div class="consumo-grid">
+            <div class="consumo-stat"><b>${fmtNum(resend.hoy && resend.hoy.emails_enviados)}</b><span>Hoy</span></div>
+            <div class="consumo-stat"><b>${fmtNum(resend.este_mes && resend.este_mes.emails_enviados)}</b><span>Este mes</span></div>
+            <div class="consumo-stat"><b>${fmtNum(resend.historico && resend.historico.emails_enviados)}</b><span>Histórico</span></div>
+            <div class="consumo-stat"><b>${fmtNum(resend.este_mes && resend.este_mes.usuarios_nuevos)}</b><span>Usuarios nuevos (mes)</span></div>
+          </div>
+          <div class="card-meta">${
+            resend.semaforo && resend.semaforo.limite_mensual
+              ? `Límite: ${fmtNum(resend.semaforo.limite_mensual)}/mes · ${resend.semaforo.porcentaje_usado.toFixed(1)}% usado${resend.semaforo.alerta ? ' ⚠️' : ''}`
+              : 'Sin límite mensual configurado'
+          }</div>
+        </div>`;
+
+      // ---- Historial (últimos días) ----
+      html += renderBarrasHistorial('Tokens de Claude por día', historial.claude || [], 'tokens_totales', v => fmtNum(v) + ' tokens');
+      html += renderBarrasHistorial('Emails enviados por día', historial.resend || [], 'emails_enviados', v => fmtNum(v) + ' emails');
+
+      // ---- Configuración ----
+      html += `
+        <div class="card">
+          <div class="card-top"><div class="card-palabra">Configuración de límites</div></div>
+          <div class="config-row">
+            <label>Límite Resend (emails/mes)</label>
+            <input type="number" id="cfgResendLimite" value="${escapeHtml(config.resend_limite_mensual ?? '')}" />
+          </div>
+          <div class="config-row">
+            <label>Presupuesto Claude (USD/mes, 0 = sin límite)</label>
+            <input type="number" step="0.01" id="cfgClaudePresupuesto" value="${escapeHtml(config.claude_presupuesto_mensual_usd ?? '')}" />
+          </div>
+          <div class="config-row">
+            <label>Alerta (%)</label>
+            <input type="number" id="cfgAlertaPorcentaje" value="${escapeHtml(config.alerta_porcentaje ?? '')}" />
+          </div>
+          <button class="btn-primary" id="guardarConfigConsumoBtn">Guardar configuración</button>
+          <div id="configConsumoResultado" class="herramienta-resultado"></div>
+        </div>`;
+
+      cont.innerHTML = html;
+      document.getElementById('guardarConfigConsumoBtn').addEventListener('click', guardarConfigConsumo);
+    }catch(err){
+      cont.innerHTML = `<div class="empty">Error al cargar el consumo: ${escapeHtml(err.message)}</div>`;
+    }
+  }
+
+  async function guardarConfigConsumo(){
+    const btn = document.getElementById('guardarConfigConsumoBtn');
+    const resultado = document.getElementById('configConsumoResultado');
+    btn.textContent = 'Guardando...';
+    resultado.className = 'herramienta-resultado';
+    resultado.textContent = '';
+    try{
+      const body = {
+        resend_limite_mensual: document.getElementById('cfgResendLimite').value,
+        claude_presupuesto_mensual_usd: document.getElementById('cfgClaudePresupuesto').value,
+        alerta_porcentaje: document.getElementById('cfgAlertaPorcentaje').value
+      };
+      const data = await apiPost('/api/comunidad/admin/consumo/config', body);
+      if(data.ok){
+        resultado.textContent = 'Configuración guardada.';
+        resultado.className = 'herramienta-resultado ok';
+        cargarConsumo();
+      } else {
+        resultado.textContent = data.error || 'Error al guardar.';
+        resultado.className = 'herramienta-resultado error';
+      }
+    }catch(err){
+      resultado.textContent = 'Error: ' + err.message;
+      resultado.className = 'herramienta-resultado error';
+    }
+    btn.textContent = 'Guardar configuración';
+  }
+
+  document.getElementById('refreshConsumoBtn').addEventListener('click', cargarConsumo);
+
+  // si ya había una clave guardada en esta sesión, entrar directo
+  if(ADMIN_KEY){
+    cargarPendientes().then(ok => {
+      if(ok){
+        gate.style.display = 'none';
+        app.style.display = 'flex';
+        cargarStats();
+        cargarBadgeAlertas();
+      }
+      else { sessionStorage.removeItem('apocrifo_admin_key'); }
+    });
+  }
+
+  // Registro del service worker propio del panel de admin
+  // (habilita "Agregar a pantalla de inicio" como app independiente)
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw-admin.js').catch(err => {
+        console.warn('No se pudo registrar sw-admin.js:', err);
+      });
+    });
+  }
+</script>
+</body>
+</html>
